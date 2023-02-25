@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 
-function ContactList() {
+function PostList() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -54,4 +54,4 @@ function ContactList() {
   );
 }
 
-export default ContactList;
+export default PostList;
