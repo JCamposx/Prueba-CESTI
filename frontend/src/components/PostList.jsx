@@ -1,28 +1,9 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { routes, url } from "../routes/routes";
+import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Button from "react-bootstrap/Button";
 
-function PostList() {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(routes.api.posts.index)
-      .then((res) => setPosts(res.data))
-      .catch((err) => console.log(err));
-  }, []);
-
-  function handleDelete(id) {
-    axios
-      .delete(url(routes.api.posts.delete, { id }))
-      .then(() => setPosts(posts.filter((post) => post.id !== id)))
-      .catch((err) => console.log(err));
-  }
-
+function PostList({ posts, onDelete }) {
   return (
     <div>
       <Row xs={1} md={2} className="g-4">
@@ -38,7 +19,7 @@ function PostList() {
                       <Button>Update</Button>
                       <Button
                         variant="danger"
-                        onClick={() => handleDelete(post.id)}
+                        onClick={() => onDelete(post.id)}
                       >
                         Delete
                       </Button>
