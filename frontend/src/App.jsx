@@ -1,11 +1,15 @@
 import "./App.css";
 import ContactList from "./components/ContactList";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <div className="container">
-      <ContactList />
-    </div>
+    <>
+      <Navbar />
+      <div className="container">
+        <ContactList />
+      </div>
+    </>
   );
 }
 
