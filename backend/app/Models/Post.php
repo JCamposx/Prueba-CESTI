@@ -18,4 +18,14 @@ class Post extends Model
         'title',
         'content',
     ];
+
+    /**
+     * Relation between posts and user.
+     *
+     * @return void
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

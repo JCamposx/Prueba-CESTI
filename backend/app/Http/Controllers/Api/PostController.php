@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -15,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $data = Post::all();
+        $data = Auth::user()->posts()->orderBy('created_at')->get();
 
         return response()->json($data, 200);
     }
@@ -30,7 +31,7 @@ class PostController extends Controller
     {
         $data = $request->validated();
 
-        Post::create($data);
+        Auth::user()->posts()->create($data);
 
         return response()->json($data, 200);
     }
@@ -43,6 +44,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $this->authorize('view', $post);
+
         return response()->json($post, 200);
     }
 
@@ -55,6 +58,8 @@ class PostController extends Controller
      */
     public function update(StorePostRequest $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $data = $request->validated();
 
         $post->update($data);
@@ -70,6 +75,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+
         $post->delete();
 
         return response()->json([], 200);

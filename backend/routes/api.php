@@ -25,6 +25,8 @@ Route::prefix('oauth')->controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
 });
 
-Route::resource('posts', PostController::class)->only(
-    ['index', 'store', 'show', 'update', 'destroy']
-);
+Route::middleware('auth:api')->group(function () {
+    Route::resource('posts', PostController::class)->only(
+        ['index', 'store', 'show', 'update', 'destroy']
+    );
+});
