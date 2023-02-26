@@ -4,12 +4,15 @@ export const routes = {
   home: "/",
   posts: {
     create: "/posts/create",
+    edit: "/posts/:id/edit",
   },
   api: {
     posts: {
       index: API + "/posts",
       store: API + "/posts",
       delete: API + "/posts/:id",
+      show: API + "/posts/:id",
+      update: API + "/posts/:id",
     },
   },
 };
