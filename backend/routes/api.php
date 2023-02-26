@@ -29,4 +29,6 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('posts', PostController::class)->only(
         ['index', 'store', 'show', 'update', 'destroy']
     );
+
+    Route::post('oauth/logout', [AuthController::class, 'logout']);
 });
