@@ -6,7 +6,16 @@ export const routes = {
     create: "/posts/create",
     edit: "/posts/:id/edit",
   },
+  auth: {
+    login: "/login",
+    register: "/register",
+  },
   api: {
+    auth: {
+      login: API + "/oauth/login",
+      register: API + "/oauth/register",
+      logout: API + "/oauth/logout",
+    },
     posts: {
       index: API + "/posts",
       store: API + "/posts",
