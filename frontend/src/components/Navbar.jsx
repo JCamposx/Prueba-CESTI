@@ -38,16 +38,29 @@ function Navbar() {
 
         <NavBootstrap.Toggle aria-controls="basic-navbar-nav" />
 
-        <NavBootstrap.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <NavLink className="nav-link" end to={routes.posts.create}>
-              New post
-            </NavLink>
-            <Link className="nav-link" onClick={handleLogout}>
-              Logout
-            </Link>
-          </Nav>
-        </NavBootstrap.Collapse>
+        {user ? (
+          <NavBootstrap.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <NavLink className="nav-link" end to={routes.posts.create}>
+                New post
+              </NavLink>
+              <Link className="nav-link" onClick={handleLogout}>
+                Logout
+              </Link>
+            </Nav>
+          </NavBootstrap.Collapse>
+        ) : (
+          <NavBootstrap.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <NavLink className="nav-link" end to={routes.auth.login}>
+                Login
+              </NavLink>
+              <NavLink className="nav-link" end to={routes.auth.register}>
+                Register
+              </NavLink>
+            </Nav>
+          </NavBootstrap.Collapse>
+        )}
       </Container>
     </NavBootstrap>
   );
