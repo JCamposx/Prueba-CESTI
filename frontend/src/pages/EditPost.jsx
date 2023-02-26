@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/esm/Form";
 import { useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import { routes, url } from "../routes/routes";
 
 function EditPost() {
@@ -15,13 +16,17 @@ function EditPost() {
     content: "",
   });
 
+  const { user } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const id = useParams();
 
   useEffect(() => {
     axios
-      .get(url(routes.api.posts.show, id))
+      .get(url(routes.api.posts.show, id), {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
       .then((res) =>
         setData({
           title: res.data.title,
@@ -46,7 +51,9 @@ function EditPost() {
     e.preventDefault();
 
     axios
-      .put(url(routes.api.posts.update, id), data)
+      .put(url(routes.api.posts.update, id), data, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
       .then(() => navigate(routes.home))
       .catch((err) => setErrors(err.response.data.errors));
   }

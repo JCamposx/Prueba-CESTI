@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PostList from "../components/PostList";
 import axios from "axios";
 import { routes, url } from "../routes/routes";
+import { AuthContext } from "../context/AuthContext";
 
 function Home() {
   const [posts, setPosts] = useState([]);
 
+  const { user } = useContext(AuthContext);
+
   useEffect(() => {
     axios
-      .get(routes.api.posts.index)
+      .get(routes.api.posts.index, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
       .then((res) => {
         setPosts(res.data);
       })

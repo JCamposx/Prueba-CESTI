@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import { routes } from "../routes/routes";
 
 function CreatePost() {
@@ -14,6 +15,8 @@ function CreatePost() {
     title: "",
     content: "",
   });
+
+  const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -32,7 +35,9 @@ function CreatePost() {
     e.preventDefault();
 
     axios
-      .post(routes.api.posts.store, data)
+      .post(routes.api.posts.store, data, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
       .then(() => navigate(routes.home))
       .catch((err) => setErrors(err.response.data.errors));
   }
