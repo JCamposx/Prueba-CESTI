@@ -37,11 +37,20 @@ function Login() {
     axios
       .post(routes.api.auth.login, credentials)
       .then((res) => {
-        setUser(res.data)
+        setUser(res.data);
         localStorage.setItem("user", JSON.stringify(res.data));
-        navigate(routes.home)
+        navigate(routes.home);
       })
-      .catch((err) => setErrors(err.response.data.errors));
+      .catch((err) => {
+        const errors = err.response.data.errors;
+
+        errors !== undefined
+          ? setErrors(errors)
+          : setErrors({
+              username: "Incorrect email or password",
+              password: "",
+            });
+      });
   }
 
   return (
